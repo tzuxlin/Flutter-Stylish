@@ -39,39 +39,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Product> products = [
-    Product(
-        id: 1,
-        title: 'ショートマウンテンパーカー',
-        image: 'assets/images/product_1.jpeg',
-        price: 1960),
-    Product(
-        id: 2,
-        title: 'ボリュームショートライダース',
-        image: 'assets/images/product_2.jpeg',
-        price: 1960),
-    Product(
-        id: 3,
-        title: 'シアーギャザーサンダル',
-        image: 'assets/images/product_3.jpeg',
-        price: 1590),
-    Product(
-        id: 2,
-        title: 'ボリュームショートライダース',
-        image: 'assets/images/product_2.jpeg',
-        price: 1960),
-    Product(
-        id: 1,
-        title: 'ショートマウンテンパーカー',
-        image: 'assets/images/product_1.jpeg',
-        price: 1960),
-  ];
-
-  List<ProductCategory> get categories => [
-        ProductCategory(name: "女裝", products: products),
-        ProductCategory(name: "男裝", products: products),
-        ProductCategory(name: "配件", products: products),
-      ];
 
   @override
   Widget build(BuildContext context) {
@@ -110,3 +77,38 @@ class StylishAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
+
+final List<Product> products = [
+  Product(
+      id: 1,
+      title: 'ショートマウンテンパーカー',
+      image: 'assets/images/product_1.jpeg',
+      price: 1960),
+  Product(
+      id: 2,
+      title: 'ボリュームショートライダース',
+      image: 'assets/images/product_2.jpeg',
+      price: 1960),
+  Product(
+      id: 3,
+      title: 'シアーギャザーサンダル',
+      image: 'assets/images/product_3.jpeg',
+      price: 1590),
+  Product(
+      id: 2,
+      title: 'ボリュームショートライダース',
+      image: 'assets/images/product_2.jpeg',
+      price: 1960),
+  Product(
+      id: 1,
+      title: 'ショートマウンテンパーカー',
+      image: 'assets/images/product_1.jpeg',
+      price: 1960),
+];
+
+List<ProductCategory> get categories => [
+  ProductCategory(name: "女裝", products: products),
+  ProductCategory(name: "男裝", products: products),
+  ProductCategory(name: "配件", products: products),
+];
