@@ -1,4 +1,5 @@
 import 'package:connie_stylish/model/product.dart';
+import 'package:connie_stylish/product/product_page.dart';
 import 'package:flutter/material.dart';
 
 import 'home/home_product_large.dart';
@@ -20,7 +21,12 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: Colors.grey[200],
       ),
-      home: MyHomePage(),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => MyHomePage(),
+        '/product': (context) => ProductPage(),
+      },
+      home: const MyHomePage(),
     );
   }
 }
@@ -33,30 +39,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> images = [
-    'images/product_1.jpeg',
-    'images/product_2.jpeg',
-    'images/product_3.jpeg',
-    'images/product_1.jpeg',
-    'images/product_2.jpeg',
-    'images/product_3.jpeg',
-    'images/product_1.jpeg',
-    'images/product_2.jpeg',
-  ];
-
   final List<Product> products = [
-    Product(title: 'ショートマウンテンパーカー', image: 'images/product_1.jpeg', price: 1960),
-    Product(title: 'ボリュームショートライダース', image: 'images/product_2.jpeg', price: 1960),
-    Product(title: 'シアーギャザーサンダル', image: 'images/product_3.jpeg', price: 1590),
-    Product(title: 'ボリュームショートライダース', image: 'images/product_2.jpeg', price: 1960),
-    Product(title: 'ショートマウンテンパーカー', image: 'images/product_1.jpeg', price: 1960),
+    Product(
+        id: 1,
+        title: 'ショートマウンテンパーカー',
+        image: 'assets/images/product_1.jpeg',
+        price: 1960),
+    Product(
+        id: 2,
+        title: 'ボリュームショートライダース',
+        image: 'assets/images/product_2.jpeg',
+        price: 1960),
+    Product(
+        id: 3,
+        title: 'シアーギャザーサンダル',
+        image: 'assets/images/product_3.jpeg',
+        price: 1590),
+    Product(
+        id: 2,
+        title: 'ボリュームショートライダース',
+        image: 'assets/images/product_2.jpeg',
+        price: 1960),
+    Product(
+        id: 1,
+        title: 'ショートマウンテンパーカー',
+        image: 'assets/images/product_1.jpeg',
+        price: 1960),
   ];
 
   List<ProductCategory> get categories => [
-    ProductCategory(name: "女裝", products: products),
-    ProductCategory(name: "男裝", products: products),
-    ProductCategory(name: "配件", products: products),
-  ];
+        ProductCategory(name: "女裝", products: products),
+        ProductCategory(name: "男裝", products: products),
+        ProductCategory(name: "配件", products: products),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         appBar: const StylishAppBar(),
         body: Column(children: [
-          HotProductList(isLargeScreen: isLargeScreen, imagePaths: images),
+          HotProductList(isLargeScreen: isLargeScreen, products: products),
           Expanded(
               child: isLargeScreen
                   ? LargeHomeList(categories: categories)
