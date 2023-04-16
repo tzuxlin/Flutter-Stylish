@@ -1,9 +1,8 @@
-import 'package:connie_stylish/model/product.dart';
+import 'package:connie_stylish/model/model/product.dart';
 import 'package:connie_stylish/product/product_page.dart';
 import 'package:flutter/material.dart';
 
-import 'home/home_product_large.dart';
-import 'home/home_product_small.dart';
+import 'home/product_list/home_product_list.dart';
 import 'home/hot_product.dart';
 
 void main() {
@@ -23,8 +22,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/home',
       routes: {
-        '/home': (context) => MyHomePage(),
-        '/product': (context) => ProductPage(),
+        '/home': (context) => const MyHomePage(),
+        '/product': (context) => const ProductPage(),
       },
       home: const MyHomePage(),
     );
@@ -39,7 +38,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     bool isLargeScreen = MediaQuery.of(context).size.width > 800;
@@ -48,10 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: const StylishAppBar(),
         body: Column(children: [
           HotProductList(isLargeScreen: isLargeScreen, products: products),
-          Expanded(
-              child: isLargeScreen
-                  ? LargeHomeList(categories: categories)
-                  : SmallHomeList(categories: categories)),
+          HomeProductList(isLargeScreen: isLargeScreen),
         ]));
   }
 }
@@ -77,7 +72,6 @@ class StylishAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
 
 final List<Product> products = [
   Product(
@@ -105,10 +99,4 @@ final List<Product> products = [
       title: 'ショートマウンテンパーカー',
       image: 'assets/images/product_1.jpeg',
       price: 1960),
-];
-
-List<ProductCategory> get categories => [
-  ProductCategory(name: "女裝", products: products),
-  ProductCategory(name: "男裝", products: products),
-  ProductCategory(name: "配件", products: products),
 ];

@@ -1,9 +1,14 @@
 import 'package:connie_stylish/component/Shadow.dart';
+import 'package:connie_stylish/home/product_list/home_product_list_cubit.dart';
+import 'package:connie_stylish/home/product_list/home_product_list_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../component/product_item.dart';
-import '../component/section_title.dart';
-import '../model/product.dart';
+import '../../component/product_item.dart';
+import '../../component/progress.dart';
+import '../../component/section_title.dart';
+import '../../model/model/product.dart';
+import '../../model/model/product_category.dart';
 
 class SmallHomeList extends StatelessWidget {
   const SmallHomeList({
@@ -15,12 +20,21 @@ class SmallHomeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: buildCategoryPages(categories),
-    );
+    final cubit = BlocProvider.of<HomeProductListCubit>(context);
+    cubit.fetch(categories);
+
+    if (cubit.state is SuccessState) {
+      return ListView(
+        children: buildCategoryPages(cubit.productList),
+      );
+    } else if (cubit.state is LoadingState) {
+      return const CenterProgress();
+    } else {
+      return const Text('Error');
+    }
   }
 
-  List<Widget> buildCategoryPages(List<ProductCategory> categories) {
+  List<Widget> buildCategoryPages(List<CategoryProduct> categories) {
     return categories
         .map((category) => SmallHomeProductList(
             title: category.name, products: category.products))
