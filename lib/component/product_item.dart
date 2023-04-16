@@ -1,4 +1,4 @@
-import 'package:connie_stylish/model/product.dart';
+import 'package:connie_stylish/model/model/product.dart';
 import 'package:flutter/material.dart';
 
 import '../product/product_wrapper.dart';

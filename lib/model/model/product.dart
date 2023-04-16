@@ -11,11 +11,11 @@ class Product {
       required this.price});
 }
 
-class ProductCategory {
+class CategoryProduct {
   final String name;
   final List<Product> products;
 
-  ProductCategory({required this.name, required this.products});
+  CategoryProduct({required this.name, required this.products});
 }
 
 class ProductDetail {

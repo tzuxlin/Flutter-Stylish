@@ -1,5 +1,5 @@
 import 'package:connie_stylish/main.dart';
-import 'package:connie_stylish/model/product.dart';
+import 'package:connie_stylish/model/model/product.dart';
 import 'package:connie_stylish/product/widgets/attribute.dart';
 import 'package:connie_stylish/product/widgets/color_widget.dart';
 import 'package:connie_stylish/product/widgets/quantity_widget.dart';
