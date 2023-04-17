@@ -11,6 +11,7 @@ class StylishProvider {
 
   Future<ProductList> fetchProductList(String type) async {
     Response response = await dio.get('$url/products/$type');
+    print('$type fetched');
     return Future(() => productListFromJson(json.encode(response.data)));
   }
 }
