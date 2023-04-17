@@ -52,7 +52,7 @@ class ProductItem extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
                   ),
-                  child: Image.asset(product.image)),
+                  child: Image.network(product.image)),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(10),

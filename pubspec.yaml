@@ -39,6 +39,8 @@ dependencies:
   flutter_bloc: ^8.0.1
   bloc: ^8.0.0
 
+  dio: ^5.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

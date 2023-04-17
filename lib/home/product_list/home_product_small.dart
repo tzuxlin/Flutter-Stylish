@@ -1,4 +1,3 @@
-import 'package:connie_stylish/component/Shadow.dart';
 import 'package:connie_stylish/home/product_list/home_product_list_cubit.dart';
 import 'package:connie_stylish/home/product_list/home_product_list_state.dart';
 import 'package:flutter/material.dart';
@@ -21,16 +20,14 @@ class SmallHomeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<HomeProductListCubit>(context);
-    cubit.fetch(categories);
+    final state = cubit.state;
 
-    if (cubit.state is SuccessState) {
-      return ListView(
-        children: buildCategoryPages(cubit.productList),
-      );
-    } else if (cubit.state is LoadingState) {
-      return const CenterProgress();
+    if (state is SuccessState) {
+      return ListView(children: buildCategoryPages(cubit.productList));
+    } else if (state is ErrorState) {
+      return Text(state.message);
     } else {
-      return const Text('Error');
+      return const CenterProgress();
     }
   }
 
