@@ -10,7 +10,7 @@ class StylishProvider {
   static const url = '$host/api/$apiVersion';
 
   Future<ProductList> fetchProductList(String type) async {
-    Response response = await dio.get('$host/products/$type');
+    Response response = await dio.get('$url/products/$type');
     return Future(() => productListFromJson(json.encode(response.data)));
   }
 }
