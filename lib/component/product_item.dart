@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connie_stylish/component/progress.dart';
 import 'package:connie_stylish/model/model/product.dart';
 import 'package:flutter/material.dart';
 
@@ -47,13 +49,30 @@ class ProductItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              ClipRRect(
+              Expanded(
+                flex: 1,
+                child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
                   ),
-                  child: Image.network(product.image)),
+                  child: CachedNetworkImage(
+                    imageUrl: product.image,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    placeholder: (context, url) => const CenterProgress(),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
+                ),
+              ),
               Expanded(
+                flex: 2,
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   child: Column(

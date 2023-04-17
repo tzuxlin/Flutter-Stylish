@@ -7,28 +7,26 @@ import '../../component/product_item.dart';
 import '../../component/progress.dart';
 import '../../component/section_title.dart';
 import '../../model/model/product.dart';
-import '../../model/model/product_category.dart';
 
 class SmallHomeList extends StatelessWidget {
   const SmallHomeList({
     super.key,
-    required this.categories,
   });
-
-  final List<ProductCategory> categories;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<HomeProductListCubit>(context);
-    final state = cubit.state;
-
-    if (state is SuccessState) {
-      return ListView(children: buildCategoryPages(cubit.productList));
-    } else if (state is ErrorState) {
-      return Text(state.message);
-    } else {
-      return const CenterProgress();
-    }
+    return BlocBuilder<HomeProductListCubit, DataCubitState>(
+      builder: (context, state) {
+        if (state is SuccessState) {
+          return ListView(
+              children: buildCategoryPages(context.read<HomeProductListCubit>().productList));
+        } else if (state is ErrorState) {
+          return Text(state.message);
+        } else {
+          return const CenterProgress();
+        }
+      },
+    );
   }
 
   List<Widget> buildCategoryPages(List<CategoryProduct> categories) {

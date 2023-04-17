@@ -1,9 +1,12 @@
 import 'package:connie_stylish/model/model/product.dart';
+import 'package:connie_stylish/model/model/product_category.dart';
 import 'package:connie_stylish/product/product_page.dart';
 import 'package:flutter/material.dart';
 
 import 'home/product_list/home_product_list.dart';
 import 'home/hot_product.dart';
+import 'home/product_list/home_product_list_cubit.dart';
+import 'model/repository/ProductRepository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,15 +41,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  final cubit = HomeProductListCubit(ProductRepository());
+
   @override
   Widget build(BuildContext context) {
     bool isLargeScreen = MediaQuery.of(context).size.width > 800;
+    cubit.fetch(ProductCategory.values);
 
     return Scaffold(
         appBar: const StylishAppBar(),
         body: Column(children: [
           HotProductList(isLargeScreen: isLargeScreen, products: products),
-          HomeProductList(isLargeScreen: isLargeScreen),
+          HomeProductList(isLargeScreen: isLargeScreen, homeProductListCubit: cubit),
         ]));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:connie_stylish/home/product_list/home_product_list_cubit.dart';
 import 'package:connie_stylish/home/product_list/home_product_list_state.dart';
-import 'package:connie_stylish/model/model/product_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,23 +11,21 @@ import '../../model/model/product.dart';
 class LargeHomeList extends StatelessWidget {
   const LargeHomeList({
     super.key,
-    required this.categories,
   });
-
-  final List<ProductCategory> categories;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<HomeProductListCubit>(context);
-    final state = cubit.state;
-
-    if (state is SuccessState) {
-      return Row(children: buildCategoryWidgets(cubit.productList));
-    } else if (state is ErrorState) {
-      return Text(state.message);
-    } else {
-      return const CenterProgress();
-    }
+    return BlocBuilder<HomeProductListCubit, DataCubitState>(
+      builder: (context, state) {
+        if (state is SuccessState) {
+          return Row(children: buildCategoryWidgets(context.read<HomeProductListCubit>().productList));
+        } else if (state is ErrorState) {
+          return Text(state.message);
+        } else {
+          return const CenterProgress();
+        }
+      },
+    );
   }
 
   List<Widget> buildCategoryWidgets(List<CategoryProduct> categories) {
