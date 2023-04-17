@@ -17,9 +17,11 @@ class HomeProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = HomeProductListCubit(ProductRepository());
+    cubit.fetch(ProductCategory.values);
+
     return BlocProvider(
-      create: (BuildContext context) =>
-          HomeProductListCubit(ProductRepository()),
+      create: (BuildContext context) => cubit,
       child: Builder(builder: (context) => _buildPage(context)),
     );
   }

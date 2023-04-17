@@ -1,5 +1,5 @@
 enum ProductCategory {
-  female,
-  male,
+  women,
+  men,
   accessories,
 }

@@ -26,7 +26,7 @@ class HomeProductListCubit extends Cubit<DataCubitState> {
       productList = results;
       emit(const SuccessState());
     } catch (e) {
-      emit(const ErrorState(""));
+      emit(ErrorState(e.toString()));
     }
   }
 }
