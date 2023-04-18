@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home/product_list/home_product_list.dart';
 import 'home/hot_product.dart';
 import 'home/product_list/home_product_list_cubit.dart';
-import 'model/repository/ProductRepository.dart';
+import 'model/repository/product_repository.dart';
 
 void main() {
   runApp(const MyApp());
