@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'dart:convert';
 
 import '../converter/product_list_converter.dart';
 
@@ -11,7 +10,6 @@ class StylishProvider {
 
   Future<ProductList> fetchProductList(String type) async {
     Response response = await dio.get('$url/products/$type');
-    print('$type fetched');
-    return Future(() => productListFromJson(json.encode(response.data)));
+    return Future(() => ProductList.fromJson(response.data));
   }
 }
