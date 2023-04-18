@@ -4,8 +4,11 @@ import '../model/product.dart';
 import '../model/product_category.dart';
 
 class ProductRepository {
+
+  final stylishProvider = StylishProvider();
+
   Future<List<Product>> fetchProducts(ProductCategory category) async {
-    return StylishProvider()
+    return stylishProvider
         .fetchProductList(category.name)
         .then((value) => value.data
             .map((e) => Product(
