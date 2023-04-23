@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:connie_stylish/component/progress.dart';
 import 'package:connie_stylish/model/model/product.dart';
+import 'package:connie_stylish/ui/component/progress.dart';
 import 'package:flutter/material.dart';
 
 import '../product/product_wrapper.dart';

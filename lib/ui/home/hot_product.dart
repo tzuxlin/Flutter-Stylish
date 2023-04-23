@@ -1,8 +1,8 @@
-import 'package:connie_stylish/product/product_wrapper.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/model/product.dart';
 import '../component/Shadow.dart';
-import '../model/model/product.dart';
+import '../product/product_wrapper.dart';
 
 class HotProductList extends StatelessWidget {
   const HotProductList(

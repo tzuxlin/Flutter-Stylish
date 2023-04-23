@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:connie_stylish/home/product_list/home_product_list_state.dart';
 
-import '../model/model/product.dart';
-import '../model/repository/product_repository.dart';
-
+import '../../model/model/product.dart';
+import '../../model/repository/product_repository.dart';
+import '../home/product_list/home_product_list_state.dart';
 
 class ProductDetailCubit extends Cubit<DataCubitState> {
 
