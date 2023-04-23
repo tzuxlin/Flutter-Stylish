@@ -1,31 +1,27 @@
 import 'dart:convert';
 
-ProductListEntity productListFromJson(String str) => ProductListEntity.fromJson(json.decode(str));
+ProductDetailEntity productListFromJson(String str) => ProductDetailEntity.fromJson(json.decode(str));
 
-String productListToJson(ProductListEntity data) => json.encode(data.toJson());
+String productListToJson(ProductDetailEntity data) => json.encode(data.toJson());
 
-class ProductListEntity {
-  ProductListEntity({
+class ProductDetailEntity {
+  ProductDetailEntity({
     required this.data,
-    this.nextPaging,
   });
 
-  List<Datum> data;
-  int? nextPaging;
+  Data data;
 
-  factory ProductListEntity.fromJson(Map<String, dynamic> json) => ProductListEntity(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-    nextPaging: json["next_paging"],
+  factory ProductDetailEntity.fromJson(Map<String, dynamic> json) => ProductDetailEntity(
+    data: Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "next_paging": nextPaging,
+    "data": data.toJson(),
   };
 }
 
-class Datum {
-  Datum({
+class Data {
+  Data({
     required this.id,
     required this.category,
     required this.title,
@@ -53,13 +49,13 @@ class Datum {
   String place;
   String note;
   String story;
-  List<Color> colors;
+  List<ColorEntity> colors;
   List<String> sizes;
-  List<Variant> variants;
+  List<VariantEntity> variants;
   String mainImage;
   List<String> images;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["id"],
     category: json["category"],
     title: json["title"],
@@ -70,9 +66,9 @@ class Datum {
     place: json["place"],
     note: json["note"],
     story: json["story"],
-    colors: List<Color>.from(json["colors"].map((x) => Color.fromJson(x))),
+    colors: List<ColorEntity>.from(json["colors"].map((x) => ColorEntity.fromJson(x))),
     sizes: List<String>.from(json["sizes"].map((x) => x)),
-    variants: List<Variant>.from(json["variants"].map((x) => Variant.fromJson(x))),
+    variants: List<VariantEntity>.from(json["variants"].map((x) => VariantEntity.fromJson(x))),
     mainImage: json["main_image"],
     images: List<String>.from(json["images"].map((x) => x)),
   );
@@ -96,8 +92,8 @@ class Datum {
   };
 }
 
-class Color {
-  Color({
+class ColorEntity {
+  ColorEntity({
     required this.code,
     required this.name,
   });
@@ -105,7 +101,7 @@ class Color {
   String code;
   String name;
 
-  factory Color.fromJson(Map<String, dynamic> json) => Color(
+  factory ColorEntity.fromJson(Map<String, dynamic> json) => ColorEntity(
     code: json["code"],
     name: json["name"],
   );
@@ -116,8 +112,8 @@ class Color {
   };
 }
 
-class Variant {
-  Variant({
+class VariantEntity {
+  VariantEntity({
     required this.colorCode,
     required this.size,
     required this.stock,
@@ -127,7 +123,7 @@ class Variant {
   String size;
   int stock;
 
-  factory Variant.fromJson(Map<String, dynamic> json) => Variant(
+  factory VariantEntity.fromJson(Map<String, dynamic> json) => VariantEntity(
     colorCode: json["color_code"],
     size: json["size"],
     stock: json["stock"],

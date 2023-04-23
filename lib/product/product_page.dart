@@ -1,53 +1,63 @@
+import 'package:connie_stylish/home/product_list/home_product_list_state.dart';
 import 'package:connie_stylish/main.dart';
 import 'package:connie_stylish/model/model/product.dart';
+import 'package:connie_stylish/model/repository/product_repository.dart';
+import 'package:connie_stylish/product/product_detail_cubit.dart';
 import 'package:connie_stylish/product/widgets/attribute.dart';
 import 'package:connie_stylish/product/widgets/color_widget.dart';
 import 'package:connie_stylish/product/widgets/quantity_widget.dart';
 import 'package:connie_stylish/product/widgets/size_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductPage extends StatelessWidget {
+import '../component/progress.dart';
+
+class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
     bool isLargeScreen = MediaQuery.of(context).size.width > 800;
-    final Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
-    final productId = arguments['product_id'];
-    final product = fetchProduct(productId);
 
-    return Scaffold(
-      appBar: const StylishAppBar(),
-      body: isLargeScreen
-          ? LargeScreenProduct(product: product)
-          : SmallScreenProduct(product: product),
-      backgroundColor: Colors.white,
+    return BlocProvider(
+      create: (context) => ProductDetailCubit(ProductRepository()),
+      child: ProductDetailScreen(isLargeScreen: isLargeScreen),
     );
   }
+}
 
-  ProductDetail fetchProduct(int id) {
-    final product = products.firstWhere((element) => element.id == id);
-    final colors = [
-      ColorModel(color: 0xFF5A6396),
-      ColorModel(color: 0xFF91B88C),
-      ColorModel(color: 0xFFD9D3A5),
-      ColorModel(color: 0xFFA67488),
-    ];
-    final sizes = [
-      SizeModel(size: 'S', quantity: 3),
-      SizeModel(size: 'M', quantity: 5),
-      SizeModel(size: 'L', quantity: 0),
-    ];
+class ProductDetailScreen extends StatefulWidget {
+  const ProductDetailScreen({
+    super.key,
+    required this.isLargeScreen,
+  });
 
-    return ProductDetail(
-      id: id,
-      title: product.title,
-      image: product.image,
-      price: product.price,
-      colors: colors,
-      sizes: sizes,
-      description: "",
-      imageList: [product.image],
+  final bool isLargeScreen;
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // final Map arguments = ModalRoute.of(context)?.settings.arguments as Map;
+    context.read<ProductDetailCubit>().fetch(201807201824);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const StylishAppBar(),
+      body: widget.isLargeScreen ? LargeScreenProduct() : SmallScreenProduct(),
+      backgroundColor: Colors.white,
     );
   }
 }
@@ -55,23 +65,31 @@ class ProductPage extends StatelessWidget {
 class LargeScreenProduct extends StatelessWidget {
   const LargeScreenProduct({
     super.key,
-    required this.product,
   });
-
-  final ProductDetail product;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(product.image),
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: ProductInfo(product: product),
-        ),
-      ],
+    return BlocBuilder<ProductDetailCubit, DataCubitState>(
+      builder: (context, state) {
+        if (state is SuccessState) {
+          final product = context.read<ProductDetailCubit>().product;
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.network(product.mainImage),
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: ProductInfo(product: product),
+              ),
+            ],
+          );
+        } else if (state is ErrorState) {
+          return Text(state.message);
+        } else {
+          return const CenterProgress();
+        }
+      },
     );
   }
 }
@@ -79,20 +97,28 @@ class LargeScreenProduct extends StatelessWidget {
 class SmallScreenProduct extends StatelessWidget {
   const SmallScreenProduct({
     super.key,
-    required this.product,
   });
-
-  final ProductDetail product;
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 90),
-      children: [
-        Image.asset(product.image),
-        ProductInfo(product: product),
-        const SizedBox(height: 300),
-      ],
+    return BlocBuilder<ProductDetailCubit, DataCubitState>(
+      builder: (context, state) {
+        if (state is SuccessState) {
+          final product = context.read<ProductDetailCubit>().product;
+          return ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 90),
+            children: [
+              Image.network(product.mainImage),
+              ProductInfo(product: product),
+              const SizedBox(height: 300),
+            ],
+          );
+        } else if (state is ErrorState) {
+          return Text(state.message);
+        } else {
+          return const CenterProgress();
+        }
+      },
     );
   }
 }
@@ -110,7 +136,7 @@ class ProductInfo extends StatefulWidget {
 }
 
 class _ProductInfoState extends State<ProductInfo> {
-  late SizeModel _selectedSize;
+  late String _selectedSize;
 
   @override
   void initState() {
@@ -151,12 +177,19 @@ class _ProductInfoState extends State<ProductInfo> {
                 onSizeChanged(s);
               },
             )),
-        Attribute(title: '數量', widget: QuantitySelector(size: _selectedSize))
+        Attribute(
+            title: '數量',
+            widget: QuantitySelector(variant: getSelectedVariant(_selectedSize))
+        )
       ],
     );
   }
 
-  void onSizeChanged(SizeModel size) {
+  Variant getSelectedVariant(String selectedSize) {
+    return widget.product.variants.firstWhere((element) => element.size == selectedSize);
+  }
+
+  void onSizeChanged(String size) {
     setState(() {
       _selectedSize = size;
     });

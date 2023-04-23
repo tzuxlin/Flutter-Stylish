@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../model/model/product.dart';
-
 class SizesWidget extends StatelessWidget {
   const SizesWidget({
     super.key,
@@ -9,15 +7,15 @@ class SizesWidget extends StatelessWidget {
     required this.onSizeChange,
   });
 
-  final List<SizeModel> sizes;
-  final Function(SizeModel) onSizeChange;
+  final List<String> sizes;
+  final Function(String) onSizeChange;
 
   @override
   Widget build(BuildContext context) {
     return Row(children: sizes.map((s) => getSizeWidget(s)).toList());
   }
 
-  Widget getSizeWidget(SizeModel size) {
+  Widget getSizeWidget(String size) {
     return Padding(
         padding: const EdgeInsets.all(4),
         child: TextButton(
@@ -29,7 +27,7 @@ class SizesWidget extends StatelessWidget {
             overlayColor: MaterialStateProperty.all<Color>(Colors.black12),
           ),
           child: Text(
-            size.size,
+            size,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ));
