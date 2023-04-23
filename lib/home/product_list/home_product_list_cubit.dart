@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:connie_stylish/model/model/product.dart';
 import 'package:connie_stylish/model/model/product_category.dart';
-import 'package:connie_stylish/model/repository/ProductRepository.dart';
+import 'package:connie_stylish/model/repository/product_repository.dart';
 
 import 'home_product_list_state.dart';
 

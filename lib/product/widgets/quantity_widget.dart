@@ -1,14 +1,13 @@
+import 'package:connie_stylish/model/model/product.dart';
 import 'package:flutter/material.dart';
-
-import '../../model/model/product.dart';
 
 class QuantitySelector extends StatefulWidget {
   const QuantitySelector({
     Key? key,
-    required this.size,
+    required this.variant,
   }) : super(key: key);
 
-  final SizeModel size;
+  final Variant variant;
 
   @override
   State<QuantitySelector> createState() => _QuantitySelectorState();
@@ -52,7 +51,7 @@ class _QuantitySelectorState extends State<QuantitySelector> {
 
   void resetState(){
     setState(() {
-      _inventoryQuantity = widget.size.quantity;
+      _inventoryQuantity = widget.variant.stock;
       _quantity = (_inventoryQuantity > 0) ? 1 : 0;
       checkIsAvailable();
     });

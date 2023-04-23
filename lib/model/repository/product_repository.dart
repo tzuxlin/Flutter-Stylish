@@ -4,7 +4,6 @@ import '../model/product.dart';
 import '../model/product_category.dart';
 
 class ProductRepository {
-
   final stylishProvider = StylishProvider();
 
   Future<List<Product>> fetchProducts(ProductCategory category) async {
@@ -18,5 +17,22 @@ class ProductRepository {
                   price: e.price,
                 ))
             .toList());
+  }
+
+  Future<ProductDetail> fetchProductDetail(int id) async {
+    return stylishProvider
+        .fetchProductDetail(id)
+        .then((value) => value.data)
+        .then((it) => ProductDetail(
+              id: it.id,
+              title: it.title,
+              mainImage: it.mainImage,
+              price: it.price,
+              colors: it.colors.map((e) => ColorModel.fromEntity(e)).toList(),
+              sizes: it.sizes,
+              variants: it.variants.map((e) => Variant.fromEntity(e)).toList(),
+              description: it.description,
+              imageList: it.images,
+            ));
   }
 }

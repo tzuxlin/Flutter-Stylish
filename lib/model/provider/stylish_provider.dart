@@ -1,3 +1,4 @@
+import 'package:connie_stylish/model/converter/product_detail_converter.dart';
 import 'package:dio/dio.dart';
 
 import '../converter/product_list_converter.dart';
@@ -8,8 +9,16 @@ class StylishProvider {
   static const apiVersion = '1.0';
   static const url = '$host/api/$apiVersion';
 
-  Future<ProductList> fetchProductList(String type) async {
+  Future<ProductListEntity> fetchProductList(String type) async {
     Response response = await dio.get('$url/products/$type');
-    return Future(() => ProductList.fromJson(response.data));
+    return Future(() => ProductListEntity.fromJson(response.data));
+  }
+
+  Future<ProductDetailEntity> fetchProductDetail(int id) async {
+    Response response = await dio.get(
+      '$url/products/details',
+      queryParameters: {'id': id},
+    );
+    return Future(() => ProductDetailEntity.fromJson(response.data));
   }
 }

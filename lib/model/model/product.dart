@@ -1,14 +1,15 @@
+import 'package:connie_stylish/model/converter/product_detail_converter.dart';
+
 class Product {
   final int id;
   final String title;
   final String image;
   final int price;
 
-  Product(
-      {required this.id,
-      required this.title,
-      required this.image,
-      required this.price});
+  Product({required this.id,
+    required this.title,
+    required this.image,
+    required this.price});
 }
 
 class CategoryProduct {
@@ -21,34 +22,52 @@ class CategoryProduct {
 class ProductDetail {
   final int id;
   final String title;
-  final String image;
+  final String mainImage;
   final int price;
   final List<ColorModel> colors;
-  final List<SizeModel> sizes;
+  final List<String> sizes;
+  final List<Variant> variants;
   final String description;
   final List<String> imageList;
 
   ProductDetail({
     required this.id,
     required this.title,
-    required this.image,
+    required this.mainImage,
     required this.price,
     required this.colors,
     required this.sizes,
+    required this.variants,
     required this.description,
     required this.imageList,
   });
 }
 
 class ColorModel {
-  final int color;
+  final String code;
+  final String name;
 
-  ColorModel({required this.color});
+  ColorModel({
+    required this.code,
+    required this.name,
+  });
+
+  factory ColorModel.fromEntity(ColorEntity entity) =>
+      ColorModel(code: entity.code, name: entity.name);
 }
 
-class SizeModel {
+class Variant {
+  final String colorCode;
   final String size;
-  final int quantity;
+  final int stock;
 
-  SizeModel({required this.size, required this.quantity});
+  Variant({
+    required this.colorCode,
+    required this.size,
+    required this.stock,
+  });
+
+  factory Variant.fromEntity(VariantEntity entity) =>
+      Variant(colorCode: entity.colorCode, size: entity.size, stock: entity.stock);
+
 }
