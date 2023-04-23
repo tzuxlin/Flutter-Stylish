@@ -1,12 +1,12 @@
 import 'package:connie_stylish/model/model/product.dart';
-import 'package:connie_stylish/product/product_page.dart';
+import 'package:connie_stylish/ui/product/product_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home/product_list/home_product_list.dart';
+import '../model/repository/product_repository.dart';
 import 'home/hot_product.dart';
+import 'home/product_list/home_product_list.dart';
 import 'home/product_list/home_product_list_cubit.dart';
-import 'model/repository/product_repository.dart';
 
 void main() {
   runApp(const MyApp());
