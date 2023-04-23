@@ -1,12 +1,12 @@
-import 'package:connie_stylish/home/product_list/home_product_list_cubit.dart';
-import 'package:connie_stylish/home/product_list/home_product_list_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../model/model/product.dart';
 import '../../component/product_item.dart';
 import '../../component/progress.dart';
 import '../../component/section_title.dart';
-import '../../model/model/product.dart';
+import 'home_product_list_cubit.dart';
+import 'home_product_list_state.dart';
 
 class SmallHomeList extends StatelessWidget {
   const SmallHomeList({
