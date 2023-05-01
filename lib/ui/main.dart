@@ -1,4 +1,5 @@
 import 'package:connie_stylish/model/model/product.dart';
+import 'package:connie_stylish/ui/map/map_sample.dart';
 import 'package:connie_stylish/ui/product/product_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => const MyHomePage(),
         '/product': (context) => const ProductPage(),
+        '/map': (context) => const MapSample(),
       },
       home: const MyHomePage(),
     );
@@ -71,7 +73,7 @@ class StylishAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Image.asset(
-          'images/stylish.png',
+          'assets/images/stylish.png',
           fit: BoxFit.fitHeight,
           height: preferredSize.height - 32,
         ),
