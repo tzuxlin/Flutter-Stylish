@@ -18,8 +18,15 @@ class SmallHomeList extends StatelessWidget {
     return BlocBuilder<HomeProductListCubit, DataCubitState>(
       builder: (context, state) {
         if (state is SuccessState) {
-          return ListView(
-              children: buildCategoryPages(context.read<HomeProductListCubit>().productList));
+          List<Widget> widgets = [];
+          widgets.add(IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/map');
+              },
+              icon: const Icon(Icons.map)));
+          widgets.addAll(buildCategoryPages(
+              context.read<HomeProductListCubit>().productList));
+          return ListView(children: widgets);
         } else if (state is ErrorState) {
           return Text(state.message);
         } else {
