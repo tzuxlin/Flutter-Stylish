@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../model/repository/product_repository.dart';
+import 'ar/ar.dart';
 import 'home/hot_product.dart';
 import 'home/product_list/home_product_list.dart';
 import 'home/product_list/home_product_list_cubit.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/home',
       routes: {
-        '/home': (context) => const MyHomePage(),
+        '/home': (context) => const ARView(),
         '/product': (context) => const ProductPage(),
         '/map': (context) => const MapSample(),
       },
